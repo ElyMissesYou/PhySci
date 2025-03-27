@@ -1,0 +1,1081 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReviewAble</title>
+    <style>
+        #account-setup{
+          padding:220px 0px 0px 0px;
+        }
+
+        .chalkboard-bg {
+            position: fixed;
+            background-image: url('physci.png');
+            background-size: 150% 150%;
+            background-repeat: no-repeat;
+            background-position:center;
+            width: 150%;
+            height: 150vh;
+        }
+
+
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            margin: 0;
+            padding: 0;
+            background-image: url('physci.png');
+            background-size:120%;
+            background-repeat: no-repeat;
+            background-position:center;
+            width: 100%; 
+            background-attachment:cover;
+            background-position-x:50%;
+            background-position-y:10%;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            padding: 40px;
+            color: #ecf0f1;
+            border-radius: 10px;
+            margin-top: 50px;
+
+
+        }
+        .question {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .answer-button:hover {
+            filter: brightness(80%);
+        }
+        .answer-button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            border: none;
+            color: rgb(255, 255, 255);
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            transition: all 0.3s ease-in-out; /* Slower start and end */
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1); /* More natural motion */
+        }
+.answer-button:nth-child(1) { background-color: #e74c3c;} /* Red */
+.answer-button:nth-child(2) { background-color: #3498db;} /* Blue */
+.answer-button:nth-child(3) { background-color: #2ecc71;} /* Green */
+.answer-button:nth-child(4) { background-color: #f1c40f;} /* Yellow */
+        .info {
+            margin-top: 20px;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            cursor: pointer;
+            border: double black 6px;
+            transition: background 0.3s;
+            margin: 10px 0;
+        }
+        button:hover {
+            background-color: #219653;
+        }
+        input[type="text"] {
+            padding: 10px;
+            font-size: 1.2em;
+            border-radius: 5px;
+            border: none;
+            margin: 10px 0;
+            width: 80%;
+            max-width: 400px;
+        }
+        .minigame-container {
+            margin-top: 20px;
+        }
+        .unscramble-letter {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .image-identification img {
+            max-width: 300px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+        .bonus-text {
+            color: #f1c40f;
+            font-weight: bold;
+            font-size: 1.2em;
+            animation: pulse 1.5s infinite;
+        }
+      @keyframes flashColor {
+    0%, 100% { opacity:0.5; }
+    50% { opacity: 1; }
+}
+
+
+.flash {
+    animation: flashColor 1.5s ease-in-out;
+    
+   
+}
+        .progress-bar {
+            width: 100%;
+            background-color: #1f4622;
+            border-radius: 5px;
+            margin: 20px 0;
+            height: 20px;
+        }
+        .progress {
+            background-color: #3cc4c4;
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .sequence-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+        .sequence-item {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            line-height: 40px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        .sequence-placeholder {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            border: 2px dashed #ecf0f1;
+            margin: 0 5px;
+        }
+        .sequence-button {
+            display: inline-block;
+            width: 50px;
+            height: 50px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            line-height: 50px;
+            text-align: center;
+            margin: 0 5px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+        .sequence-button:hover {
+            transform: scale(1.1);
+        }
+        .clear-sequence {
+            background-color: #e74c3c;
+            color: white;
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            margin-left: 10px;
+        }
+      @keyframes flashColor {
+    0%, 100% { opacity:0.5; }
+    50% { opacity: 1; }
+}
+
+
+.flash {
+    animation: flashColor 1.5s ease-in-out;
+   
+}
+        .progress-bar {
+            width: 100%;
+            background-color: #2c3e50;
+            border-radius: 5px;
+            margin: 20px 0;
+            height: 20px;
+        }
+        .progress {
+            background-color: #3cc4c4;
+            height: 100%;
+            border-radius: 5px;
+            width: 0%;
+            transition: width 0.5s;
+        }
+        .sequence-box {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin: 20px 0;
+            min-height: 60px;
+        }
+        .sequence-item {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            line-height: 40px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.2s ease;
+        }
+
+
+        @keyframes flash-red {
+            0%, 100% { background-color: #34495e00; }
+            50% { background-color: rgba(231, 76, 60, 0.8); }
+        }
+       
+        .flash-red {
+            animation: flash-red 0.5s ease-in-out;            
+        }
+       
+        /* New correct answer animation */
+        @keyframes flash-green {
+            0%, 100% { background-color: #34495e00; }
+            50% { background-color: rgba(46, 204, 113, 0.8); }
+        }
+       
+        .flash-green {
+            animation: flash-green 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="account-setup" style="display: flex; flex-direction: column; align-items: center;">
+        <h1>Welcome to ReviewAble! <br> Before we start, what is your name?</h1>
+        <input type="text" id="username" placeholder="Enter your name" />
+        <button onclick="createAccount()">Start</button>
+    </div>
+    <div class="container" id="quiz-container" style="display: none;">
+        <div class="info">
+            <p>Name: <span id="player-name"></span></p>
+            <p>Questions answered correctly: <span id="level">0</span></p>
+            <p>Coins: <span id="coins">0</span></p>
+        </div>
+        <div class="progress-bar">
+            <div class="progress" id="question-progress"></div>
+        </div>
+       
+        <!-- Regular Quiz Section -->
+        <div id="regular-quiz">
+            <div class="question" id="question">Loading...</div>
+            <button class="answer-button" id="option0" onclick="checkAnswer(0)"></button>
+            <button class="answer-button" id="option1" onclick="checkAnswer(1)"></button>
+            <button class="answer-button" id="option2" onclick="checkAnswer(2)"></button>
+            <button class="answer-button" id="option3" onclick="checkAnswer(3)"></button>
+            <button onclick="buyRevealAnswer()">Buy Reveal Answer (20 Coins)</button>
+            <p id="reveal-answer" style="display: none; color: #e74c3c;"></p>
+        </div>
+       
+        <!-- Unscramble Word Minigame -->
+        <div id="unscramble-game" style="display: none;">
+            <div class="question">Unscramble the Word!</div>
+            <p>Topic: <span id="unscramble-topic"></span></p>
+            <div class="minigame-container" id="scrambled-word-container"></div>
+            <p>Your Answer:</p>
+            <div class="minigame-container" id="unscramble-answer"></div>
+            <div>
+                <button onclick="resetUnscramble()">Reset</button>
+                <button onclick="checkUnscrambleAnswer()">Submit Answer</button>
+            </div>
+            <p class="bonus-text">Bonus: +15 coins for correct answer!</p>
+        </div>
+       
+        <!-- Image Identification Minigame -->
+        <div id="image-identification" style="display: none;">
+            <div class="question">Identify the Image!</div>
+            <div class="image-identification">
+                <img id="identification-image" src="" alt="Identification image">
+            </div>
+            <p>What is this?</p>
+            <div>
+                <button class="answer-button" id="image-option0" onclick="checkImageAnswer(0)"></button>
+                <button class="answer-button" id="image-option1" onclick="checkImageAnswer(1)"></button>
+                <button class="answer-button" id="image-option2" onclick="checkImageAnswer(2)"></button>
+                <button class="answer-button" id="image-option3" onclick="checkImageAnswer(3)"></button>
+            </div>
+            <p class="bonus-text">Bonus: +15 coins for correct answer!</p>
+        </div>
+       
+        <!-- Memory Sequence Minigame -->
+        <div id="memory-sequence" style="display: none;">
+            <div class="question">Remember the Sequence!</div>
+            <div class="minigame-container" id="sequence-display"></div>
+            <div id="sequence-input" style="display: none;">
+                <p>Enter the sequence in order:</p>
+               
+                <!-- Display for the entered sequence -->
+                <div class="sequence-box" id="player-sequence-display"></div>
+               
+                <!-- Color buttons -->
+                <div class="minigame-container" id="sequence-buttons"></div>
+               
+                <div>
+                    <button onclick="clearSequence()" class="clear-sequence">Clear</button>
+                    <button onclick="checkSequence()">Submit Sequence</button>
+                </div>
+            </div>
+            <p class="bonus-text">Bonus: +15 coins for correct sequence!</p>
+        </div>
+        <div id="player"></div>
+<button onclick="toggleMusic()">🎵 Toggle Music</button>
+    </div>
+    <script>
+        // Main quiz questions
+        const questions = [
+        { question: "What is the atomic number of Oxygen?", options: ["6", "7", "8", "9"], answer: 2 },
+            { question: "What is Newton's First Law of Motion?", options: ["Objects attract each other", "An object in motion stays in motion.", "For every action, there is a reaction", "Force equals mass times acceleration"], answer: 1 },
+            { question: "What is the formula for force?", options: ["F = mv", "F = ma", "F = mg", "F = v/t"], answer: 1 },
+            { question: "Light spreads in different directions when hitting small particles.", options: ["Scattering", "Polarization", "Diffraction", "Refraction"], answer: 0 },
+            { question: "What is the speed of light in a vacuum?", options: ["3.00 x 10^8 m/s", "1.50 x 10^8 m/s", "2.99 x 10^8 m/s", "3.50 x 10^8 m/s"], answer: 0 },
+            { question: "Who developed the theory of relativity?", options: ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Nikola Tesla"], answer: 2 },
+            { question: "What is the symbol for the element Gold?", options: ["Go", "Gl", "Au", "Ag"], answer: 2 },
+            { question: "Light bends around obstacles or passes through small openings, creating patterns.", options: ["Diffraction", "Scattering", "Reflection", "Polarization"], answer: 3 },
+            { question: "Which planet is known as the Red Planet?", options: ["Venus", "Mars", "Jupiter", "Saturn"], answer: 1 },
+            { question: "What is the chemical formula for water?", options: ["H2O", "CO2", "O2", "H2SO4"], answer: 0 },
+            { question: "What is the largest organ in the human body?", options: ["Heart", "Brain", "Liver", "Skin"], answer: 3 },
+            { question: "What is the unit of measurement for force?", options: ["Watt", "Newton", "Joule", "Pascal"], answer: 1 },
+            { question: "He believes that Light is a Particle?", options: ["Isaac Newton", "Galileo Galilei", "Albert Einstein", "Nikola Tesla"], answer: 0 },
+            { question: "He believes that Light is a wave?", options: ["Aristotle", "Newton", "Kepler", "Huygene"], answer: 3 },
+            { question: "Light waves are filtered to vibrate in a single direction.", options: ["Scattering", "Refraction", "Polarization", "Diffraction"], answer: 2 },
+            { question: "Which type of lens is used to correct short-sightedness (myopia)?", options: ["Convex", "Concave", "Cylindrical", "Bifocal"], answer: 1  },
+            { question: "Which gas do plants use for photosynthesis?", options: ["Oxygen", "Nitrogen", "Carbon Dioxide", "Hydrogen"], answer: 3 },
+            { question: "Light bends when passing from one  medium to another due to a change in speed.", options: ["Scattering", "Refraction", "Polarization", "Diffraction"], answer: 1 },
+            { question: "Which organ pumps blood throughout the body?" , options: [ "Lungs", "Brain", "Heart", "Stomach"], answer: 2 },
+            { question: "What is the measure of how fast something moves?", options: ["Velocity", "Acceleration", "Speed", "Momentum"], answer: 2 },
+            { question: "What is the speed of light?", options: ["3.00 x 10^8 m/s", "1.50 x 10^8 m/s", "2.99 x 10^8 m/s", "3.50 x 10^8 m/s"], answer: 0 },
+            { question: "Which color of light has the highest energy?" , options: ["Red", "Green", "Blue", "Violet"], answer: 3 },
+            { question: "Which planet has the strongest gravitational pull?" , options: ["Earth", "Mars", "Jupiter", "Saturn"], answer: 2 },
+            { question: "What is the most abundant gas in Earth's atmosphere?", options: ["Oxygen", "Carbon Dioxide", "Nitrogen", "Hydrogen" ], answer: 2 },
+            { question: "Which type of mirror is used in car side mirrors to give a wider view?", options: ["Concave", "Convex", "Plane", "Cylindrical"], answer: 1 },
+            { question: "What type of bond is formed between two nonmetal atoms?", options: ["Ionic", "Covalent", "Metallic", "Hydrogen"], answer: 1 },
+            { question: "Which organ is responsible for filtering blood in the human body?", options: ["Liver", "Heart", "Kidney", "Lungs"], answer: 2 },
+            { question: "Which vitamin is produced by the body when exposed to sunlight?", options: ["Vitamin A", "Vitamin B", "Vitamin C", "Vitamin D"], answer: 3 },
+            { question: "Which phenomenon causes the sky to appear blue?", options: ["Refraction", "Scattering", "Diffraction", "Reflection"], answer: 1 },
+            { question: "Overlapping light waves combine to create bright and dark patterns", options: ["Interference", "Refraction", "Polarization", "Diffraction"], answer: 0 },
+            { question: "Which element has the highest electronegativity?", options: ["Oxygen", "Fluorine", "Chlorine", "Neon"], answer: 1 },
+            { question: "What is the chemical formula of table salt?", options: ["NaCl", "KCl", "NaHCO3", "CaCl2"], answer: 0 },
+            { question: "Which acid is found in lemons?", options: ["Acetic Acid", "Sulfuric Acid", "Citric Acid", "Hydrochloric Acid"], answer: 2 },
+            { question: "Which law states that the volume of a gas is inversely proportional to its pressure?", options: ["Boyle’s Law", "Charles’ Law", "Pascal’s Law", "Newton’s Law"], answer: 0 },
+            { question: "What type of energy is stored in a stretched rubber band?", options: ["Kinetic Energy", "Chemical Energy", "Elastic Potential Energy", "Thermal Energy"], answer:  2 },
+            { question: "Which subatomic particle has a negative charge?", options: ["Proton", "Neutron", "Electron", "Nucleus"], answer: 2  },
+            { question: "What is the most reactive metal in the periodic table?", options: ["Gold", "Sodium", "Lithium", "Francium"], answer: 3 },
+            { question: "Which scientist discovered radioactivity?", options: ["Marie Curie", "Isaac Newton", "Albert Einstein", "Nikola Tesla"], answer: 0 },
+            { question: "Which type of wave does not require a medium to travel?", options: ["Sound waves", "Seismic waves", "Electromagnetic waves", "Water waves"], answer: 2 },
+            { question: "Which force keeps planets in orbit around the Sun?", options: ["Friction", "Magnetic Force", "Centripetal Force", "Gravitational Force"], answer: 3 },
+            { question: "Which of the following is an example of a vector quantity?", options: ["Mass", "Distance", "Speed", "Velocity"], answer: 3 },
+            { question: "What happens to the pressure of a gas when its volume is decreased at constant temperature?", options: ["Increases", "Decreases", "Remains the same", "Becomes zero"], answer: 0 },
+            { question: "Which gas is the lightest element in the periodic table?", options: ["Helium", "Hydrogen", "Oxygen", "Nitrogen"], answer: 1  },
+            { question: "What is the primary cause of ocean tides?", options: ["Wind", "Moon's gravity", "Earth's rotation", "Sun's heat"], answer: 1  },
+            { question: "Which type of radiation has the shortest wavelength?", options: ["Radio waves", "Ultraviolet", "X-rays", "Gamma rays"], answer: 3 },
+            { question: "What is the charge of a neutron?", options: ["Positive", "Negative", "Neutral", "Depends on the atom"], answer: 2 },
+            { question: "Which color of visible light has the longest wavelength?", options: ["Blue", "Green", "Red", "Violet"], answer: 2 },
+            { question: "Which part of the atom is responsible for chemical bonding?", options: ["Protons", "Neutrons", "Electrons", "Nucleus"], answer: 2 },
+            { question: "What happens to the kinetic energy of an object when its velocity doubles?", options: ["Doubles", "Triples", "Quadruples", "Remains the same"], answer: 2 },
+            { question: "What force opposes the motion of objects moving through air?", options: ["Gravity", "Friction", "Air resistance", "Tension"], answer: 2 },
+            { question: "Which subatomic particle is responsible for electricity?", options: ["Proton", "Neutron", "Electron", "Nucleus"], answer: 2 },
+            { question: "What type of circuit allows electricity to flow through multiple paths?", options: ["Series circuit", "Parallel circuit", "Open circuit", "Short circuit"], answer: 1  },
+            { question: "Which material is the best conductor of electricity?", options: ["Rubber", "Glass", "Copper", "Plastic"], answer: 2 },
+            { question: "What happens when like charges are brought close together?", options: ["They attract", "They repel", "They neutralize", "They disappear"], answer: 1 },
+            { question: "Which type of wave causes particles to move perpendicular to the direction of the wave?", options: ["Longitudinal", "Transverse", "Electromagnetic", "Mechanical"], answer: 1 },
+            { question: "What property of a wave is measured in hertz (Hz)?", options: ["Amplitude", "Frequency", "Wavelength", "Speed"], answer: 1 },
+            { question: "Which type of electromagnetic wave is used in night vision cameras?", options: ["Microwaves", "Infrared", "Ultraviolet", "Gamma rays"], answer: 1  },
+            { question: "What type of heat transfer occurs when you touch a hot spoon?", options: ["Conduction", "Convection", "Radiation", "Evaporation"], answer: 0 },
+            { question: "Which state of matter has a definite volume but no definite shape", options: ["Solid", "Liquid", "Gas", "Plasma"], answer: 1 },
+            { question: "What is the process of changing a gas to a liquid called?", options: ["Evaporation", "Condensation", "Sublimation", "Melting"], answer: 1 },
+            { question: "Which law states that energy cannot be created or destroyed?", options: ["Boyle’s Law", "Newton’s First Law", "Law of Conservation of Energy", "Ohm’s Law"], answer: 2 },
+            { question: "What is the most abundant element in the universe?", options: ["Oxygen", "Carbon", "Hydrogen", "Helium"], answer: 2  },
+            { question: "Which type of chemical bond involves the sharing of electrons?", options: ["Ionic", "Covalent", "Metallic", "Hydrogen"], answer: 1 },
+            { question: "Which type of reaction occurs when a substance gains oxygen?", options: ["Reduction", "Oxidation", "Neutralization", "Decomposition"], answer: 1 },
+            { question: "What is the unit of acceleration?", options: ["m/s", "m/s²", "N", "kg/m³"], answer: 1 },
+            { question: "Which type of friction acts on an object that is not moving?", options: ["Static friction", "Kinetic friction", "Rolling friction", "Fluid friction"], answer: 0 },
+            { question: "Which factor affects gravitational force the most?", options: ["Mass and distance", "Shape and volume", "Temperature and density", "Time and speed"], answer: 0  },
+            { question: "What type of magnet is produced when electricity flows through a wire coil?", options: ["Permanent magnet", "Electromagnet", "Bar magnet", "Temporary magnet"], answer: 1 },
+            { question: "If a car travels 100 km in 2 hours, what is its average speed?", options: ["25 km/h", "50 km/h", "75 km/h", "100 km/h"], answer: 1 },
+            { question: "What phenomenon causes a pencil in a glass of water to look bent?", options: ["Reflection", "Refraction", "Diffraction", "Interference"], answer: 1  },
+       
+        ];
+       
+        // Word unscramble minigame data
+        const unscrambleWords = [
+            { word: "ENERGY", topic: "Physics" },
+            { word: "GRAVITY", topic: "Physics" },
+            { word: "MOLECULE", topic: "Chemistry" },
+            { word: "BIOLOGY", topic: "Science" },
+            { word: "ELECTRON", topic: "Chemistry" },
+            { word: "MOMENTUM", topic: "Physics" },
+            { word: "MOTION", topic: "Physics" },
+            { word: "LIGHT", topic: "Physics" },
+            { word: "FORCE", topic: "Physics" },
+            { word: "VELOCITY", topic: "Physics" },
+            { word: "ACCELERATION", topic: "Physics" },
+            { word: "ELEMENT", topic: "Chemistry" },
+            { word: "COMPOUND", topic: "Chemistry" },
+            { word: "REFRACTION", topic: "Physics" },
+            { word: "DIFFRACTION", topic: "Physics" },
+            { word: "PRESSURE", topic: "Physics" },
+            { word: "GRAVITATION", topic: "Physics" },
+            { word: "REACTION", topic: "Chemistry" },
+            { word: "NUCLEUS", topic: "Chemistry" },
+            { word: "SOLUTION", topic: "Chemistry" },
+            { word: "BOND", topic: "Chemistry" },
+            { word: "ION", topic: "Chemistry" },
+            { word: "COVALENT", topic: "Chemistry" },
+            { word: "VALENCE", topic: "Chemistry" },
+            { word: "POLARITY", topic: "Chemistry" },      
+        ];
+       
+        // Image identification minigame data
+        const imageIdentifications = [
+    {
+        image: "https://microscopeinternational.com/content/resources/compound-microscope-labeled.jpg",
+        question: "What scientific instrument is this?",
+        options: ["Microscope", "Telescope", "Spectroscope", "Barometer"],
+        answer: 0
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c7/Saturn_during_Equinox.jpg/800px-Saturn_during_Equinox.jpg",
+        question: "Which planet is shown here?",
+        options: ["Mars", "Jupiter", "Saturn", "Venus"],
+        answer: 2
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/Derived_Neuron_schema_with_no_labels.svg/800px-Derived_Neuron_schema_with_no_labels.svg.png",
+        question: "What type of cell is this?",
+        options: ["Red blood cell", "Neuron", "Stem cell", "White blood cell"],
+        answer: 1
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/OSIRIS_Mars_true_color.jpg/800px-OSIRIS_Mars_true_color.jpg",
+        question: "You see a Reddish planet, which planet is it",
+        options: ["Mars", "Sun", "Neptune", "Mercury"],
+        answer: 0
+    },
+    {
+        image: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ae/Aristotle_Altemps_Inv8575.jpg/800px-Aristotle_Altemps_Inv8575.jpg",
+        question: "Who proposed the prime movers concept?",
+        options: ["Isaac Newton", "Nikola Tesla", "Aristotle", "Johannes Kepler"],
+        answer: 2
+    },
+    {
+        image: "https://www.findgemstone.com/wp-content/uploads/2024/07/Where-Are-Sedimentary-Rocks-Found.jpg",
+        question: "Rocks near water, often layered, what kind of rock is it?",
+        options: ["Igneous", "Rock", "Mineral", "Sedimentary"],
+        answer: 3
+    }
+];
+       
+        // Memory sequence data
+        const memoryColors = [
+            { name: "Red", color: "#e74c3c" },
+            { name: "Blue", color: "#3498db" },
+            { name: "Green", color: "#2ecc71" },
+            { name: "Yellow", color: "#f1c40f" }
+        ];
+        let currentSequence = [];
+        let playerSequence = [];
+        let sequenceLength = 4;
+       
+        // Game state variables
+        let currentQuestion = 0;
+        let coins = 0;
+        let level = 0;
+        let playerName = "";
+        let questionCounter = 0;
+        let currentUnscrambleWord = "";
+        let selectedLetters = [];
+        let availableLetters = [];
+       
+        function createAccount() {
+            playerName = document.getElementById("username").value.trim();
+            if (playerName === "") {
+                alert("Please enter a name");
+                return;
+            }
+            document.getElementById("player-name").innerText = playerName;
+            document.getElementById("account-setup").style.display = "none";
+            document.getElementById("quiz-container").style.display = "block";
+            loadQuestion();
+        }
+
+
+function loadQuestion() {
+    hideAllSections();
+    document.getElementById("regular-quiz").style.display = "block";
+
+
+    document.getElementById("question").innerText = questions[currentQuestion].question;
+
+
+    // Define fixed colors for the four choices
+    const colors = ["#e74c3c", "#3498db", "#2ecc71", "#f1c40f"]; // Red, Blue, Green, Yellow
+
+    const border = ["double black 6px","double black 6px ", "double black 6px", "double black 6px"]
+
+    // Get all answer buttons and assign text + colors in order
+    document.querySelectorAll("#regular-quiz .answer-button").forEach((btn, index) => {
+        btn.innerText = questions[currentQuestion].options[index]; // Assign the correct text
+        btn.style.backgroundColor = colors[index]; // Assign the correct color
+        btn.style.border = border[index];
+    });
+
+
+    document.getElementById("reveal-answer").style.display = "none";
+
+
+    // Update progress bar
+    let progress = (questionCounter % 3) * 33.33;
+    document.getElementById("question-progress").style.width = progress + "%";
+}
+
+
+        function checkAnswer(selectedIndex) {
+            if (selectedIndex === questions[currentQuestion].answer) {
+                // Correct answer - trigger green flash animation
+                correctAnswerAnimation();
+               
+                coins += 5;
+                level++;
+                updateStats();
+               
+                // Move to next question or minigame after animation completes
+                setTimeout(() => {
+                    nextQuestion();
+                }, 800);
+            } else {
+                // Wrong answer - trigger shake and flash
+                wrongAnswerAnimation();
+               
+                // Delay the transition to next question to show the animation
+                setTimeout(() => {
+                    nextQuestion();
+                }, 800);
+            }
+        }
+       
+        // Function to handle correct answer animations
+        function correctAnswerAnimation() {
+            // Get the quiz container and add green flash animation
+            const quizContainer = document.getElementById("quiz-container");
+            quizContainer.classList.add("flash-green");
+           
+            // Remove animation class after animation completes
+            setTimeout(() => {
+                quizContainer.classList.remove("flash-green");
+            }, 600);
+        }
+       
+        // Function to handle wrong answer animations
+        function wrongAnswerAnimation() {
+            // Get the quiz container and add animations
+            const quizContainer = document.getElementById("quiz-container");
+            quizContainer.classList.add("shake", "flash-red");
+           
+            // Remove animation classes after animation completes
+            setTimeout(() => {
+                quizContainer.classList.remove("shake", "flash-red");
+            }, 600);
+        }
+       
+        function nextQuestion() {
+            questionCounter++;
+            currentQuestion = (currentQuestion + 1) % questions.length;
+           
+            // Check if it's time for a minigame (every 3 questions)
+            if (questionCounter % 3 === 0) {
+                loadMinigame();
+            } else {
+                loadQuestion();
+            }
+        }
+
+
+        function buyRevealAnswer() {
+            if (coins >= 20) {
+                coins -= 20;
+                updateStats();
+                document.getElementById("reveal-answer").innerText = "Correct Answer: " +
+                    questions[currentQuestion].options[questions[currentQuestion].answer];
+                document.getElementById("reveal-answer").style.display = "block";
+            } else {
+                alert("Not enough coins!");
+            }
+        }
+       
+        function loadMinigame() {
+            hideAllSections();
+           
+            // Choose a random minigame type
+            const gameTypes = ["unscramble", "identification", "memory"];
+            const gameType = gameTypes[Math.floor(Math.random() * gameTypes.length)];
+           
+            // Set progress bar to full for minigames
+            document.getElementById("question-progress").style.width = "100%";
+           
+            if (gameType === "unscramble") {
+                loadUnscrambleGame();
+            } else if (gameType === "identification") {
+                loadImageIdentification();
+            } else {
+                loadMemorySequence();
+            }
+        }
+       
+        function loadUnscrambleGame() {
+            document.getElementById("unscramble-game").style.display = "block";
+           
+            // Select a random word
+            const randomIndex = Math.floor(Math.random() * unscrambleWords.length);
+            const wordObj = unscrambleWords[randomIndex];
+            currentUnscrambleWord = wordObj.word;
+           
+            // Display the topic
+            document.getElementById("unscramble-topic").textContent = wordObj.topic;
+           
+            // Scramble the letters
+            availableLetters = currentUnscrambleWord.split('');
+            for (let i = availableLetters.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [availableLetters[i], availableLetters[j]] = [availableLetters[j], availableLetters[i]];
+            }
+           
+            selectedLetters = [];
+           
+            // Display scrambled letters
+            updateUnscrambleDisplay();
+        }
+       
+        function updateUnscrambleDisplay() {
+            // Display available letters
+            const scrambledContainer = document.getElementById("scrambled-word-container");
+            scrambledContainer.innerHTML = "";
+           
+            availableLetters.forEach((letter, index) => {
+                const letterDiv = document.createElement("div");
+                letterDiv.className = "unscramble-letter";
+                letterDiv.textContent = letter;
+                letterDiv.onclick = function() {
+                    selectLetter(index);
+                };
+                scrambledContainer.appendChild(letterDiv);
+            });
+           
+            // Display selected letters
+            const answerContainer = document.getElementById("unscramble-answer");
+            answerContainer.innerHTML = "";
+           
+            selectedLetters.forEach((letter, index) => {
+                const letterDiv = document.createElement("div");
+                letterDiv.className = "unscramble-letter";
+                letterDiv.textContent = letter;
+                letterDiv.onclick = function() {
+                    deselectLetter(index);
+                };
+                answerContainer.appendChild(letterDiv);
+            });
+        }
+       
+        function selectLetter(index) {
+            if (index >= 0 && index < availableLetters.length) {
+                const letter = availableLetters[index];
+                availableLetters.splice(index, 1);
+                selectedLetters.push(letter);
+                updateUnscrambleDisplay();
+            }
+        }
+       
+        function deselectLetter(index) {
+            if (index >= 0 && index < selectedLetters.length) {
+                const letter = selectedLetters[index];
+                selectedLetters.splice(index, 1);
+                availableLetters.push(letter);
+                updateUnscrambleDisplay();
+            }
+        }
+       
+        function resetUnscramble() {
+            availableLetters = availableLetters.concat(selectedLetters);
+            selectedLetters = [];
+            updateUnscrambleDisplay();
+        }
+       
+        function checkUnscrambleAnswer() {
+            const userAnswer = selectedLetters.join('');
+            if (userAnswer === currentUnscrambleWord) {
+                // Correct answer - green flash
+                correctAnswerAnimation();
+               
+                coins += 15;
+                level++;
+                updateStats();
+               
+                setTimeout(() => {
+                    alert("Correct! +15 coins!");
+                    loadQuestion();
+                }, 600);
+            } else {
+                // Wrong answer animation for unscramble game
+                wrongAnswerAnimation();
+               
+                setTimeout(() => {
+                    alert("Incorrect. Better luck next time!");
+                   loadQuestion();
+                }, 600);
+            }
+        }
+       
+        function loadImageIdentification() {
+            document.getElementById("image-identification").style.display = "block";
+           
+            // Select a random image identification question
+            const randomIndex = Math.floor(Math.random() * imageIdentifications.length);
+            const imageQ = imageIdentifications[randomIndex];
+           
+            // Set the image and question
+            document.getElementById("identification-image").src = imageQ.image;
+            document.querySelector("#image-identification .question").textContent = imageQ.question;
+           
+            // Set the answer options
+            document.querySelectorAll("#image-identification .answer-button").forEach((btn, index) => {
+                btn.textContent = imageQ.options[index];
+                btn.setAttribute("data-answer", index === imageQ.answer ? "true" : "false");
+            });
+        }
+       
+        function checkImageAnswer(selectedIndex) {
+            const button = document.getElementById(`image-option${selectedIndex}`);
+            const isCorrect = button.getAttribute("data-answer") === "true";
+           
+            if (isCorrect) {
+                // Correct answer - green flash
+                correctAnswerAnimation();
+               
+                coins += 15;
+                level++;
+                updateStats();
+               
+                setTimeout(() => {
+                    alert("Correct! +15 coins!");
+                    loadQuestion();
+                }, 600);
+            } else {
+                // Wrong answer animation for image game
+                wrongAnswerAnimation();
+               
+                setTimeout(() => {
+                    alert("Incorrect. Better luck next time!");
+                    loadQuestion();
+                }, 600);
+            }
+        }
+       
+        function loadMemorySequence() {
+    document.getElementById("memory-sequence").style.display = "block";
+    const sequenceDisplay = document.getElementById("sequence-display");
+    sequenceDisplay.innerHTML = "Watch the sequence...";
+ 
+    currentSequence = [];
+    for (let i = 0; i < sequenceLength; i++) {
+        const randomColorIndex = Math.floor(Math.random() * memoryColors.length);
+        currentSequence.push(memoryColors[randomColorIndex]);
+    }
+
+
+    let i = 0;
+    function showNextColor() {
+        if (i >= currentSequence.length) {
+            setTimeout(() => {
+                sequenceDisplay.innerHTML = "Now repeat the sequence!";
+                setupSequenceInput();
+            }, 500);
+            return;
+        }
+
+
+        const colorObj = currentSequence[i];
+        sequenceDisplay.innerHTML = ""; // Clear previous color
+
+
+        if (i > 0 && colorObj.name === currentSequence[i - 1].name) {
+            setTimeout(() => {
+                displayColor(colorObj);
+            }, 300); // Small gap to show separation
+        } else {
+            displayColor(colorObj);
+        }
+
+
+        i++;
+        setTimeout(showNextColor, 1000);
+    }
+
+
+    function displayColor(colorObj) {
+        const colorBox = document.createElement("div");
+        colorBox.className = "unscramble-letter flash";
+        colorBox.style.backgroundColor = colorObj.color;
+        colorBox.textContent = colorObj.name;
+        sequenceDisplay.appendChild(colorBox);
+    }
+
+
+    showNextColor();
+}
+
+
+        function setupSequenceInput() {
+            document.getElementById("sequence-input").style.display = "block";
+           
+            // Setup color buttons
+            const buttonsContainer = document.getElementById("sequence-buttons");
+            buttonsContainer.innerHTML = "";
+           
+            // Reset player sequence
+            playerSequence = [];
+            updatePlayerSequenceDisplay();
+           
+            // Create color buttons
+            memoryColors.forEach(colorObj => {
+                const button = document.createElement("div");
+                button.className = "sequence-button";
+                button.style.backgroundColor = colorObj.color;
+                button.textContent = colorObj.name;
+                button.onclick = function() {
+                    addToPlayerSequence(colorObj);
+                };
+                buttonsContainer.appendChild(button);
+            });
+        }
+       
+       
+       
+       
+        function addToPlayerSequence(colorObj) {
+            // Only add if we haven't reached the sequence length
+            if (playerSequence.length < currentSequence.length) {
+                playerSequence.push(colorObj);
+                updatePlayerSequenceDisplay();
+               
+                // Auto-submit if player has entered full sequence
+                if (playerSequence.length === currentSequence.length) {
+                    setTimeout(() => {
+                        checkSequence();
+                    }, 500);
+                }
+            }
+        }
+       
+        function updatePlayerSequenceDisplay() {
+            const displayContainer = document.getElementById("player-sequence-display");
+            displayContainer.innerHTML = "";
+           
+            // First create empty placeholders for the sequence
+            for (let i = 0; i < currentSequence.length; i++) {
+                const placeholder = document.createElement("div");
+                if (i < playerSequence.length) {
+                    // This position has been filled
+                    placeholder.className = "sequence-item";
+                    placeholder.style.backgroundColor = playerSequence[i].color;
+                    placeholder.textContent = playerSequence[i].name;
+                   
+                    // Add animation to show it was just added
+                    if (i === playerSequence.length - 1) {
+                        placeholder.style.transform = "scale(1.1)";
+                        setTimeout(() => {
+                            placeholder.style.transform = "scale(1)";
+                        }, 200);
+                    }
+                } else {
+                    // Empty placeholder
+                    placeholder.className = "sequence-placeholder";
+                }
+                displayContainer.appendChild(placeholder);
+            }
+        }
+       
+        function clearSequence() {
+            playerSequence = [];
+            updatePlayerSequenceDisplay();
+        }
+       
+        function checkSequence() {
+            let correct = true;
+           
+            if (playerSequence.length !== currentSequence.length) {
+                correct = false;
+            } else {
+                for (let i = 0; i < currentSequence.length; i++) {
+                    if (playerSequence[i].name !== currentSequence[i].name) {
+                        correct = false;
+                        break;
+                    }
+                }
+            }
+           
+            if (correct) {
+                // Correct answer - green flash
+                correctAnswerAnimation();
+               
+                coins += 15;
+                level++;
+                updateStats();
+               
+                setTimeout(() => {
+                    alert("Correct sequence! +15 coins!");
+                    loadQuestion();
+                }, 600);
+            } else {
+                // Wrong answer animation for sequence game
+                wrongAnswerAnimation();
+               
+                // Show the correct sequence when wrong
+                setTimeout(() => {
+                    const displayContainer = document.getElementById("sequence-display");
+                    displayContainer.innerHTML = "The correct sequence was:";
+                   
+                    // Display correct sequence
+                    let correctSequenceHTML = "";
+                    currentSequence.forEach(colorObj => {
+                        correctSequenceHTML += `<div class="sequence-item" style="background-color: ${colorObj.color}">${colorObj.name}</div>`;
+                    });
+                    displayContainer.innerHTML += `<div class="sequence-box">${correctSequenceHTML}</div>`;
+                   
+                    // Wait a bit before going back to questions
+                    setTimeout(() => {
+                        loadQuestion();
+                    }, 3000);
+                }, 600);
+            }
+        }
+       
+        function hideAllSections() {
+            document.getElementById("regular-quiz").style.display = "none";
+            document.getElementById("unscramble-game").style.display = "none";
+            document.getElementById("image-identification").style.display = "none";
+            document.getElementById("memory-sequence").style.display = "none";
+        }
+       
+        function updateStats() {
+            document.getElementById("coins").innerText = coins;
+            document.getElementById("level").innerText = level;
+        }
+
+
+let player;
+function onYouTubeIframeAPIReady() {
+   player = new YT.Player('player', {
+       height: '0',
+       width: '0',
+       videoId: 'https://youtu.be/8YGlzSl6cxU?si=x10iOunOmbwH4ark', // YouTube Video ID mo
+       playerVars: {
+           'autoplay': 1,
+           'loop': 1,
+           'playlist': '8YGlzSl6cxU',
+           'controls': 0,
+           'disablekb': 1,
+           'modestbranding': 1
+       },
+       events: {
+           'onReady': function(event) {
+               event.target.setVolume(100); // Adjust volume (0-100)
+           }
+       }
+   });
+}
+
+
+function toggleMusic() {
+   if (player.getPlayerState() === 1) { // Playing
+       player.pauseVideo();
+   } else {
+       player.playVideo();
+   }
+}
+
+
+// Load YouTube API
+let tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+let firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+/*function levelUp() {
+        playerLevel++;
+        document.getElementById('level').textContent = `Level: ${Level}`;
+        checkLevel();
+    }
+
+function checkLevel() {        
+    
+    if (level === 80) {
+            // Display congratulatory message
+            const congratsDiv = document.createElement('div');
+            congratsDiv.classList.add('congrats');
+            congratsDiv.textContent = "🎉 Congratulations! You've reached level 80! 🎯";
+            document.body.appendChild(congratsDiv);
+
+            // Add background color effect
+            document.body.style.backgroundColor = "#ffeb3b";  
+
+            // Add confetti effect
+            createConfetti();
+        }
+    }
+
+    function createConfetti() {
+        for (let i = 0; i < 100; i++) {
+            let confetti = document.createElement('div');
+            confetti.innerHTML = "🎊";
+            confetti.style.position = "fixed";
+            confetti.style.left = `${Math.random() * 100}vw`;
+            confetti.style.top = `${Math.random() * 100}vh`;
+            confetti.style.fontSize = `${Math.random() * 40 + 20}px`;
+            confetti.style.opacity = `${Math.random()}`;
+            confetti.style.animation = `fall 2s linear infinite`;
+            
+            document.body.appendChild(confetti);
+
+            // Remove confetti after a while
+            setTimeout(() => {
+                confetti.remove();
+            }, 5000);
+        }
+    }
+*/
+
+    </script>
+</body>
+</html>
+
+
+
