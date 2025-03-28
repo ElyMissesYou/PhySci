@@ -509,7 +509,7 @@
         // Game state variables
         let currentQuestion = 0;
         let coins = 0;
-        let level = 78;
+        let level = 0;
         let playerName = "";
         let questionCounter = 0;
         let currentUnscrambleWord = "";
